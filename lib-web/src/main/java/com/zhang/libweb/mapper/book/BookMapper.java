@@ -1,4 +1,4 @@
-package com.zhang.libweb.mapper;
+package com.zhang.libweb.mapper.book;
 
 
 import com.zhang.libweb.model.book.BookDTO;

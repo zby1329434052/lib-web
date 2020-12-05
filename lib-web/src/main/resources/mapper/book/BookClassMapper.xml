@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.demo.mapper.BookClassMapper">
-  <resultMap id="BaseResultMap" type="com.demo.model.BookClassDTO">
+<mapper namespace="mapper.BookClassMapper">
+  <resultMap id="BaseResultMap" type="BookClassDTO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="tmp1" jdbcType="VARCHAR" property="tmp1" />
@@ -23,7 +23,7 @@
     delete from book_class
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.demo.model.BookClassDTO" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="BookClassDTO" useGeneratedKeys="true">
     insert into book_class (`name`, tmp1, tmp2, 
       create_date, update_date, valid_flag
       )
@@ -31,7 +31,7 @@
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{validFlag,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.demo.model.BookClassDTO" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="BookClassDTO" useGeneratedKeys="true">
     insert into book_class
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
@@ -74,7 +74,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.demo.model.BookClassDTO">
+  <update id="updateByPrimaryKeySelective" parameterType="BookClassDTO">
     update book_class
     <set>
       <if test="name != null">
@@ -98,7 +98,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.demo.model.BookClassDTO">
+  <update id="updateByPrimaryKey" parameterType="BookClassDTO">
     update book_class
     set `name` = #{name,jdbcType=VARCHAR},
       tmp1 = #{tmp1,jdbcType=VARCHAR},
