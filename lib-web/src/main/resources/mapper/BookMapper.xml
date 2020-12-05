@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BookMapper">
+  <resultMap id="BaseResultMap" type="model.BookDTO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="book_class_id" jdbcType="INTEGER" property="bookClassId" />
+    <result column="book_price" jdbcType="DECIMAL" property="bookPrice" />
+    <result column="book_publish" jdbcType="VARCHAR" property="bookPublish" />
+    <result column="book_author" jdbcType="VARCHAR" property="bookAuthor" />
+    <result column="book_img" jdbcType="VARCHAR" property="bookImg" />
+    <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
+    <result column="tmp1" jdbcType="VARCHAR" property="tmp1" />
+    <result column="tmp2" jdbcType="VARCHAR" property="tmp2" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="valid_flag" jdbcType="VARCHAR" property="validFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, book_name, book_class_id, book_price, book_publish, book_author, book_img, publish_date, 
+    tmp1, tmp2, create_date, update_date, valid_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="model.BookDTO" useGeneratedKeys="true">
+    insert into book (book_name, book_class_id, book_price, 
+      book_publish, book_author, book_img, 
+      publish_date, tmp1, tmp2, 
+      create_date, update_date, valid_flag
+      )
+    values (#{bookName,jdbcType=VARCHAR}, #{bookClassId,jdbcType=INTEGER}, #{bookPrice,jdbcType=DECIMAL}, 
+      #{bookPublish,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, #{bookImg,jdbcType=VARCHAR}, 
+      #{publishDate,jdbcType=TIMESTAMP}, #{tmp1,jdbcType=VARCHAR}, #{tmp2,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{validFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="model.BookDTO" useGeneratedKeys="true">
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bookName != null">
+        book_name,
+      </if>
+      <if test="bookClassId != null">
+        book_class_id,
+      </if>
+      <if test="bookPrice != null">
+        book_price,
+      </if>
+      <if test="bookPublish != null">
+        book_publish,
+      </if>
+      <if test="bookAuthor != null">
+        book_author,
+      </if>
+      <if test="bookImg != null">
+        book_img,
+      </if>
+      <if test="publishDate != null">
+        publish_date,
+      </if>
+      <if test="tmp1 != null">
+        tmp1,
+      </if>
+      <if test="tmp2 != null">
+        tmp2,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="validFlag != null">
+        valid_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bookName != null">
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookClassId != null">
+        #{bookClassId,jdbcType=INTEGER},
+      </if>
+      <if test="bookPrice != null">
+        #{bookPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bookPublish != null">
+        #{bookPublish,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAuthor != null">
+        #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bookImg != null">
+        #{bookImg,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tmp1 != null">
+        #{tmp1,jdbcType=VARCHAR},
+      </if>
+      <if test="tmp2 != null">
+        #{tmp2,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validFlag != null">
+        #{validFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.BookDTO">
+    update book
+    <set>
+      <if test="bookName != null">
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookClassId != null">
+        book_class_id = #{bookClassId,jdbcType=INTEGER},
+      </if>
+      <if test="bookPrice != null">
+        book_price = #{bookPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bookPublish != null">
+        book_publish = #{bookPublish,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAuthor != null">
+        book_author = #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bookImg != null">
+        book_img = #{bookImg,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tmp1 != null">
+        tmp1 = #{tmp1,jdbcType=VARCHAR},
+      </if>
+      <if test="tmp2 != null">
+        tmp2 = #{tmp2,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validFlag != null">
+        valid_flag = #{validFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.BookDTO">
+    update book
+    set book_name = #{bookName,jdbcType=VARCHAR},
+      book_class_id = #{bookClassId,jdbcType=INTEGER},
+      book_price = #{bookPrice,jdbcType=DECIMAL},
+      book_publish = #{bookPublish,jdbcType=VARCHAR},
+      book_author = #{bookAuthor,jdbcType=VARCHAR},
+      book_img = #{bookImg,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      tmp1 = #{tmp1,jdbcType=VARCHAR},
+      tmp2 = #{tmp2,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      valid_flag = #{validFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
