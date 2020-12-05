@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.BookMapper">
-  <resultMap id="BaseResultMap" type="model.BookDTO">
+  <resultMap id="BaseResultMap" type="BookDTO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="book_name" jdbcType="VARCHAR" property="bookName" />
     <result column="book_class_id" jdbcType="INTEGER" property="bookClassId" />
@@ -30,7 +30,7 @@
     delete from book
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="model.BookDTO" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="BookDTO" useGeneratedKeys="true">
     insert into book (book_name, book_class_id, book_price, 
       book_publish, book_author, book_img, 
       publish_date, tmp1, tmp2, 
@@ -42,7 +42,7 @@
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{validFlag,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="model.BookDTO" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="BookDTO" useGeneratedKeys="true">
     insert into book
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="bookName != null">
@@ -121,7 +121,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="model.BookDTO">
+  <update id="updateByPrimaryKeySelective" parameterType="BookDTO">
     update book
     <set>
       <if test="bookName != null">
@@ -163,7 +163,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="model.BookDTO">
+  <update id="updateByPrimaryKey" parameterType="BookDTO">
     update book
     set book_name = #{bookName,jdbcType=VARCHAR},
       book_class_id = #{bookClassId,jdbcType=INTEGER},
