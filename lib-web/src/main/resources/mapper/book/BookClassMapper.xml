@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.BookClassMapper">
-  <resultMap id="BaseResultMap" type="BookClassDTO">
+<mapper namespace="com.zhang.libweb.mapper.book.BookClassMapper">
+  <resultMap id="BaseResultMap" type="com.zhang.libweb.model.book.BookClassDTO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="tmp1" jdbcType="VARCHAR" property="tmp1" />
     <result column="tmp2" jdbcType="VARCHAR" property="tmp2" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-    <result column="valid_flag" jdbcType="VARCHAR" property="validFlag" />
+    <result column="valid_flag" jdbcType="VARCHAR" property="validFlagEnum" />
   </resultMap>
   <sql id="Base_Column_List">
     id, `name`, tmp1, tmp2, create_date, update_date, valid_flag
   </sql>
+  <select id="findListByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from book_class
+    where name like '${name}%'
+    and valid_flag='ENABLE'
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from book_class
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
+    and valid_flag = 'ENABLE'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from book_class
+    update book_class
+    set valid_flag='DISABLE'
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="BookClassDTO" useGeneratedKeys="true">
-    insert into book_class (`name`, tmp1, tmp2, 
-      create_date, update_date, valid_flag
-      )
-    values (#{name,jdbcType=VARCHAR}, #{tmp1,jdbcType=VARCHAR}, #{tmp2,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{validFlag,jdbcType=VARCHAR}
+    insert into book_class (`name`, valid_flag)
+    values (#{name,jdbcType=VARCHAR}, #{validFlagEnum,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="BookClassDTO" useGeneratedKeys="true">
@@ -37,19 +44,7 @@
       <if test="name != null">
         `name`,
       </if>
-      <if test="tmp1 != null">
-        tmp1,
-      </if>
-      <if test="tmp2 != null">
-        tmp2,
-      </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-      <if test="updateDate != null">
-        update_date,
-      </if>
-      <if test="validFlag != null">
+      <if test="validFlagEnum != null">
         valid_flag,
       </if>
     </trim>
@@ -57,20 +52,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="tmp1 != null">
-        #{tmp1,jdbcType=VARCHAR},
-      </if>
-      <if test="tmp2 != null">
-        #{tmp2,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null">
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="validFlag != null">
-        #{validFlag,jdbcType=VARCHAR},
+      <if test="validFlagEnum != null">
+        #{validFlagEnum,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -80,20 +63,11 @@
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="tmp1 != null">
-        tmp1 = #{tmp1,jdbcType=VARCHAR},
-      </if>
-      <if test="tmp2 != null">
-        tmp2 = #{tmp2,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null">
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="updateDate != null">
         update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="validFlag != null">
-        valid_flag = #{validFlag,jdbcType=VARCHAR},
+      <if test="validFlagEnum != null">
+        valid_flag = #{validFlagEnum,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -101,11 +75,8 @@
   <update id="updateByPrimaryKey" parameterType="BookClassDTO">
     update book_class
     set `name` = #{name,jdbcType=VARCHAR},
-      tmp1 = #{tmp1,jdbcType=VARCHAR},
-      tmp2 = #{tmp2,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
-      valid_flag = #{validFlag,jdbcType=VARCHAR}
+      valid_flag = #{validFlagEnum,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

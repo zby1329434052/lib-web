@@ -1,7 +1,8 @@
-package com.zhang.libweb.model;
+package com.zhang.libweb.model.book;
 
 import java.io.Serializable;
-import java.util.Date;
+
+import com.zhang.libweb.model.BaseDTO;
 import lombok.Data;
 
 /**
@@ -9,7 +10,7 @@ import lombok.Data;
  * @author 
  */
 @Data
-public class BookClassDTO implements Serializable {
+public class BookClassDTO extends BaseDTO implements Serializable {
 
     /**
      * 分类名称

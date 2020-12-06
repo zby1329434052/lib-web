@@ -1,7 +1,5 @@
 package com.zhang.libweb.enums;
 
-import lombok.Data;
-
 public enum HttpCode {
 
     /**
@@ -32,7 +30,4 @@ public enum HttpCode {
         return code;
     }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
 }

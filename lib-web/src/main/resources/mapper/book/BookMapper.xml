@@ -14,7 +14,7 @@
     <result column="tmp2" jdbcType="VARCHAR" property="tmp2" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-    <result column="valid_flag" jdbcType="VARCHAR" property="validFlag" />
+    <result column="valid_flag" jdbcType="VARCHAR" property="validFlagEnum" />
   </resultMap>
   <sql id="Base_Column_List">
     id, book_name, book_class_id, book_price, book_publish, book_author, book_img, publish_date, 
@@ -39,7 +39,7 @@
     values (#{bookName,jdbcType=VARCHAR}, #{bookClassId,jdbcType=INTEGER}, #{bookPrice,jdbcType=DECIMAL}, 
       #{bookPublish,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, #{bookImg,jdbcType=VARCHAR}, 
       #{publishDate,jdbcType=TIMESTAMP}, #{tmp1,jdbcType=VARCHAR}, #{tmp2,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{validFlag,jdbcType=VARCHAR}
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{validFlagEnum,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="BookDTO" useGeneratedKeys="true">
@@ -78,7 +78,7 @@
       <if test="updateDate != null">
         update_date,
       </if>
-      <if test="validFlag != null">
+      <if test="validFlagEnum != null">
         valid_flag,
       </if>
     </trim>
@@ -116,8 +116,8 @@
       <if test="updateDate != null">
         #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="validFlag != null">
-        #{validFlag,jdbcType=VARCHAR},
+      <if test="validFlagEnum != null">
+        #{validFlagEnum,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -157,8 +157,8 @@
       <if test="updateDate != null">
         update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="validFlag != null">
-        valid_flag = #{validFlag,jdbcType=VARCHAR},
+      <if test="validFlagEnum != null">
+        valid_flag = #{validFlagEnum,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -176,7 +176,7 @@
       tmp2 = #{tmp2,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
-      valid_flag = #{validFlag,jdbcType=VARCHAR}
+      valid_flag = #{validFlagEnum,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
