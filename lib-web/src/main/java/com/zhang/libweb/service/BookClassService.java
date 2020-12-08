@@ -1,9 +1,7 @@
 package com.zhang.libweb.service;
 
 import com.zhang.libweb.constants.ResultDTO;
-import com.zhang.libweb.model.BookClassDTO;
-
-import java.util.List;
+import com.zhang.libweb.model.book.BookClassDTO;
 
 public interface BookClassService {
 
@@ -35,7 +33,7 @@ public interface BookClassService {
      */
     ResultDTO insertSelective(BookClassDTO record);
 
-    ResultDTO selectByPrimaryKey(Integer id);
+    ResultDTO selectByPrimaryKey(int id);
 
     /**
      * selective更新

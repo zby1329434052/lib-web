@@ -17,26 +17,16 @@ public class ResultDTO {
     private Object data;
 
     public ResultDTO(int code, String msg) {
+        this.system="lib";
         this.code = code;
         this.msg = msg;
-    }
-
-    public ResultDTO(String system, int code, String msg, Object data) {
-        this.system = system;
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
     }
 
     public ResultDTO(int code, String msg, Object data) {
+        this.system="lib";
         this.code = code;
         this.msg = msg;
         this.data = data;
     }
 
-    public ResultDTO(String system, int code, String msg) {
-        this.system = system;
-        this.code = code;
-        this.msg = msg;
-    }
 }

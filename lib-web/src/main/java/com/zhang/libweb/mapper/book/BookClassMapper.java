@@ -1,6 +1,6 @@
 package com.zhang.libweb.mapper.book;
 
-import com.zhang.libweb.model.BookClassDTO;
+import com.zhang.libweb.model.book.BookClassDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public interface BookClassMapper {
      */
     int insertSelective(BookClassDTO record);
 
-    BookClassDTO selectByPrimaryKey(Integer id);
+    BookClassDTO selectByPrimaryKey(int id);
 
     /**
      * selective更新
