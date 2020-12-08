@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhang.libweb.mapper.book.BookClassMapper">
-  <resultMap id="BaseResultMap" type="com.zhang.libweb.model.book.BookClassDTO">
+  <resultMap id="BookClassDTO" type="com.zhang.libweb.model.book.BookClassDTO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="tmp1" jdbcType="VARCHAR" property="tmp1" />
@@ -13,7 +13,7 @@
   <sql id="Base_Column_List">
     id, `name`, tmp1, tmp2, create_date, update_date, valid_flag
   </sql>
-  <select id="findListByName" resultMap="BaseResultMap">
+  <select id="findListByName" resultMap="BookClassDTO">
     select
     <include refid="Base_Column_List" />
     from book_class
@@ -21,7 +21,7 @@
     and valid_flag='ENABLE'
   </select>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BookClassDTO">
     select 
     <include refid="Base_Column_List" />
     from book_class
@@ -33,12 +33,12 @@
     set valid_flag='DISABLE'
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="BookClassDTO" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.zhang.libweb.model.book.BookClassDTO" useGeneratedKeys="true">
     insert into book_class (`name`, valid_flag)
     values (#{name,jdbcType=VARCHAR}, #{validFlagEnum,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="BookClassDTO" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhang.libweb.model.book.BookClassDTO" useGeneratedKeys="true">
     insert into book_class
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="BookClassDTO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhang.libweb.model.book.BookClassDTO">
     update book_class
     <set>
       <if test="name != null">
@@ -72,7 +72,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="BookClassDTO">
+  <update id="updateByPrimaryKey" parameterType="com.zhang.libweb.model.book.BookClassDTO">
     update book_class
     set `name` = #{name,jdbcType=VARCHAR},
       update_date = #{updateDate,jdbcType=TIMESTAMP},

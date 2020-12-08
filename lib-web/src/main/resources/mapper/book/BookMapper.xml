@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.BookMapper">
-  <resultMap id="BaseResultMap" type="BookDTO">
+<mapper namespace="com.zhang.libweb.mapper.book.BookMapper">
+  <resultMap id="BookDTO" type="com.zhang.libweb.model.book.BookDTO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="book_name" jdbcType="VARCHAR" property="bookName" />
     <result column="book_class_id" jdbcType="INTEGER" property="bookClassId" />
     <result column="book_price" jdbcType="DECIMAL" property="bookPrice" />
+    <result column="book_count" jdbcType="DECIMAL" property="bookCount" />
     <result column="book_publish" jdbcType="VARCHAR" property="bookPublish" />
     <result column="book_author" jdbcType="VARCHAR" property="bookAuthor" />
     <result column="book_img" jdbcType="VARCHAR" property="bookImg" />
@@ -17,32 +18,41 @@
     <result column="valid_flag" jdbcType="VARCHAR" property="validFlagEnum" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, book_name, book_class_id, book_price, book_publish, book_author, book_img, publish_date, 
+    id, book_name, book_class_id, book_price, book_count, book_publish, book_author, book_img, publish_date,
     tmp1, tmp2, create_date, update_date, valid_flag
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+  <select id="findListByName" resultMap="BookDTO">
+    select
+    <include refid="Base_Column_List" />
+    from book
+    where book_name like '${bookName}%'
+    and valid_flag='ENABLE'
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BookDTO">
+    select
     <include refid="Base_Column_List" />
     from book
     where id = #{id,jdbcType=INTEGER}
+    and valid_flag='ENABLE'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from book
+    update book
+    set valid_flag='DISABLE'
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="BookDTO" useGeneratedKeys="true">
-    insert into book (book_name, book_class_id, book_price, 
-      book_publish, book_author, book_img, 
-      publish_date, tmp1, tmp2, 
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.zhang.libweb.model.book.BookDTO" useGeneratedKeys="true">
+    insert into book (book_name, book_class_id, book_price,
+      book_publish, book_author, book_img,
+      publish_date, tmp1, tmp2,
       create_date, update_date, valid_flag
       )
-    values (#{bookName,jdbcType=VARCHAR}, #{bookClassId,jdbcType=INTEGER}, #{bookPrice,jdbcType=DECIMAL}, 
-      #{bookPublish,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, #{bookImg,jdbcType=VARCHAR}, 
-      #{publishDate,jdbcType=TIMESTAMP}, #{tmp1,jdbcType=VARCHAR}, #{tmp2,jdbcType=VARCHAR}, 
+    values (#{bookName,jdbcType=VARCHAR}, #{bookClassId,jdbcType=INTEGER}, #{bookPrice,jdbcType=DECIMAL},
+      #{bookPublish,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, #{bookImg,jdbcType=VARCHAR},
+      #{publishDate,jdbcType=TIMESTAMP}, #{tmp1,jdbcType=VARCHAR}, #{tmp2,jdbcType=VARCHAR},
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{validFlagEnum,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="BookDTO" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhang.libweb.model.book.BookDTO" useGeneratedKeys="true">
     insert into book
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="bookName != null">
@@ -53,6 +63,9 @@
       </if>
       <if test="bookPrice != null">
         book_price,
+      </if>
+      <if test="bookCount != null">
+        book_count,
       </if>
       <if test="bookPublish != null">
         book_publish,
@@ -92,6 +105,9 @@
       <if test="bookPrice != null">
         #{bookPrice,jdbcType=DECIMAL},
       </if>
+      <if test="bookCount != null">
+        #{bookCount},
+      </if>
       <if test="bookPublish != null">
         #{bookPublish,jdbcType=VARCHAR},
       </if>
@@ -121,7 +137,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="BookDTO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhang.libweb.model.book.BookDTO">
     update book
     <set>
       <if test="bookName != null">
@@ -163,7 +179,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="BookDTO">
+  <update id="updateByPrimaryKey" parameterType="com.zhang.libweb.model.book.BookDTO">
     update book
     set book_name = #{bookName,jdbcType=VARCHAR},
       book_class_id = #{bookClassId,jdbcType=INTEGER},
