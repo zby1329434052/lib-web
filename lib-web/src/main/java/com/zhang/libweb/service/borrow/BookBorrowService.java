@@ -1,8 +1,9 @@
 package com.zhang.libweb.service.borrow;
 
 import com.zhang.libweb.constants.ResultDTO;
-import com.zhang.libweb.model.book.BookClassDTO;
 import com.zhang.libweb.model.borrow.BookBorrowDTO;
+
+import java.util.Date;
 
 public interface BookBorrowService {
 
@@ -25,14 +26,14 @@ public interface BookBorrowService {
      * @param record 实体类（不好含ID）
      * @return
      */
-    ResultDTO insert(BookClassDTO record);
+    ResultDTO insert(BookBorrowDTO record);
 
     /**
      *     selective区别在 如果属性为空则对应属性不更新
      * @param record 实体类（不好含ID）
      * @return
      */
-    ResultDTO insertSelective(BookClassDTO record);
+    ResultDTO insertSelective(BookBorrowDTO record);
 
     ResultDTO selectByPrimaryKey(int id);
 
@@ -41,12 +42,14 @@ public interface BookBorrowService {
      * @param record 实体类（不好含ID）
      * @return
      */
-    ResultDTO updateByPrimaryKeySelective(BookClassDTO record);
+    ResultDTO updateByPrimaryKeySelective(BookBorrowDTO record);
 
     /**
      * 更新
      * @param record 实体类（不好含ID）
      * @return
      */
-    ResultDTO updateByPrimaryKey(BookClassDTO record);
+    ResultDTO updateByPrimaryKey(BookBorrowDTO record);
+
+    ResultDTO doBookBorrow(int bookId, Date startDate, Date endDate, int borrowCount, int userId, String userName, boolean vipFlag);
 }

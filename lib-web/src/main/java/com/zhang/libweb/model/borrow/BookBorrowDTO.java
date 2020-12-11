@@ -14,10 +14,10 @@ import lombok.Data;
 @Data
 public class BookBorrowDTO extends BaseDTO implements Serializable {
 
-    /**
-     * 数据主键
-     */
-    private Integer id;
+//    /**
+//     * 数据主键
+//     */
+//    private Integer id;
 
     /**
      * 用户ID
@@ -64,30 +64,30 @@ public class BookBorrowDTO extends BaseDTO implements Serializable {
      */
     private BigDecimal tradeFee;
 
-    /**
-     * 备份字段1
-     */
-    private String tmp1;
-
-    /**
-     * 备份字段2
-     */
-    private String tmp2;
-
-    /**
-     * 创建时间
-     */
-    private Date createDate;
-
-    /**
-     * 最近一次更新时间
-     */
-    private Date updateDate;
-
-    /**
-     * 数据是否有效 有效ENABLE  无效DISABLE
-     */
-    private String validFlag;
+//    /**
+//     * 备份字段1
+//     */
+//    private String tmp1;
+//
+//    /**
+//     * 备份字段2
+//     */
+//    private String tmp2;
+//
+//    /**
+//     * 创建时间
+//     */
+//    private Date createDate;
+//
+//    /**
+//     * 最近一次更新时间
+//     */
+//    private Date updateDate;
+//
+//    /**
+//     * 数据是否有效 有效ENABLE  无效DISABLE
+//     */
+//    private String validFlag;
 
     private static final long serialVersionUID = 1L;
 }
