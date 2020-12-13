@@ -149,6 +149,9 @@
       <if test="bookPrice != null">
         book_price = #{bookPrice,jdbcType=DECIMAL},
       </if>
+      <if test="bookCount != null">
+        book_count = #{bookCount},
+      </if>
       <if test="bookPublish != null">
         book_publish = #{bookPublish,jdbcType=VARCHAR},
       </if>
@@ -184,6 +187,7 @@
     set book_name = #{bookName,jdbcType=VARCHAR},
       book_class_id = #{bookClassId,jdbcType=INTEGER},
       book_price = #{bookPrice,jdbcType=DECIMAL},
+      book_count = #{bookCount},
       book_publish = #{bookPublish,jdbcType=VARCHAR},
       book_author = #{bookAuthor,jdbcType=VARCHAR},
       book_img = #{bookImg,jdbcType=VARCHAR},

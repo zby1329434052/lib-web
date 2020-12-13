@@ -119,10 +119,14 @@ public class BookBorrowServiceImpl implements BookBorrowService {
         if (vipFlag){
             bookBorrowDTO.setTradeFee(new BigDecimal(0.0));
         }
-        bookBorrowDTO.setCreateDate(new Date());
+        // createDate让数据库自动生成了
+        // bookBorrowDTO.setCreateDate(new Date());
+        bookBorrowDTO.setStartDate(startDate);
+        bookBorrowDTO.setEndDate(endDate);
+        bookBorrowDTO.setCount(borrowCount);
         bookBorrowDTO.setValidFlagEnum(String.valueOf(ValidFlagEnum.ENABLE));
         //新增
-        int result = bookBorrowMapper.insert(bookBorrowDTO);
+        int result = bookBorrowMapper.insertSelective(bookBorrowDTO);
         return result;
     }
 }
