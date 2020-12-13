@@ -16,11 +16,11 @@
     <result column="tmp2" jdbcType="VARCHAR" property="tmp2" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-    <result column="valid_flag" jdbcType="VARCHAR" property="validFlag" />
+    <result column="valid_flag" jdbcType="VARCHAR" property="validFlagEnum" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user_id, user_name, book_id, book_name, `count`, start_date, end_date, price, 
-    trade_fee, tmp1, tmp2, create_date, update_date, valid_flag
+    trade_fee, tmp1, tmp2, update_date, valid_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BookBorrowDTO">
     select 
@@ -36,13 +36,13 @@
     insert into book_borrow (user_id, user_name, book_id, 
       book_name, `count`, start_date, 
       end_date, price, trade_fee, 
-      tmp1, tmp2, create_date, 
+      tmp1, tmp2,
       update_date, valid_flag)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{bookId,jdbcType=INTEGER}, 
       #{bookName,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, 
       #{endDate,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL}, #{tradeFee,jdbcType=DECIMAL}, 
-      #{tmp1,jdbcType=VARCHAR}, #{tmp2,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updateDate,jdbcType=TIMESTAMP}, #{validFlag,jdbcType=VARCHAR})
+      #{tmp1,jdbcType=VARCHAR}, #{tmp2,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{validFlagEnum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhang.libweb.model.borrow.BookBorrowDTO" useGeneratedKeys="true">
     insert into book_borrow
@@ -80,13 +80,10 @@
       <if test="tmp2 != null">
         tmp2,
       </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
       <if test="updateDate != null">
         update_date,
       </if>
-      <if test="validFlag != null">
+      <if test="validFlagEnum != null">
         valid_flag,
       </if>
     </trim>
@@ -124,14 +121,11 @@
       <if test="tmp2 != null">
         #{tmp2,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="updateDate != null">
         #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="validFlag != null">
-        #{validFlag,jdbcType=VARCHAR},
+      <if test="validFlagEnum != null">
+        #{validFlagEnum,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -171,14 +165,11 @@
       <if test="tmp2 != null">
         tmp2 = #{tmp2,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null">
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="updateDate != null">
         update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="validFlag != null">
-        valid_flag = #{validFlag,jdbcType=VARCHAR},
+      <if test="validFlagEnum != null">
+        valid_flag = #{validFlagEnum,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -196,9 +187,8 @@
       trade_fee = #{tradeFee,jdbcType=DECIMAL},
       tmp1 = #{tmp1,jdbcType=VARCHAR},
       tmp2 = #{tmp2,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
-      valid_flag = #{validFlag,jdbcType=VARCHAR}
+      valid_flag = #{validFlagEnum,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
