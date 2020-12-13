@@ -3,22 +3,23 @@ package com.zhang.libweb.web.book;
 
 import com.zhang.libweb.constants.ResultDTO;
 import com.zhang.libweb.enums.HttpCode;
-import com.zhang.libweb.model.book.BookClassDTO;
-import com.zhang.libweb.service.book.BookClassService;
+import com.zhang.libweb.model.book.BookDTO;
+import com.zhang.libweb.service.book.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/bookClass")
-public class BookClassController {
+@RequestMapping("/book")
+public class BookController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private BookClassService bookClassService;
+    private BookService bookService;
 
     /**
      * 根据名称查找分类信息
@@ -28,7 +29,7 @@ public class BookClassController {
     @RequestMapping("/findListByName")
     public ResultDTO findListByName(String name){
         try {
-            return bookClassService.findListByName(name);
+            return bookService.findListByName(name);
         }catch (Exception e){
             logger.error("系统异常："+e);
             return new ResultDTO(HttpCode.EXCEPTION.getCode(),"系统异常");
@@ -43,7 +44,7 @@ public class BookClassController {
     @RequestMapping("/findById")
     public ResultDTO findById(int id){
         try {
-            return bookClassService.selectByPrimaryKey(id);
+            return bookService.selectByPrimaryKey(id);
         }catch (Exception e){
             logger.error("系统异常："+e);
             return new ResultDTO(HttpCode.EXCEPTION.getCode(),"系统异常");
@@ -52,13 +53,13 @@ public class BookClassController {
 
     /**
      * 新增
-     * @param bookClassDTO 新增实体
+     * @param bookDTO 新增实体
      * @return
      */
     @RequestMapping("/insert")
-    public ResultDTO insert(BookClassDTO bookClassDTO){
+    public ResultDTO insert(@RequestBody BookDTO bookDTO){
         try {
-            return bookClassService.insert(bookClassDTO);
+            return bookService.insertSelective(bookDTO);
         }catch (Exception e){
             logger.error("系统异常："+e);
             return new ResultDTO(HttpCode.EXCEPTION.getCode(),"系统异常");
@@ -67,13 +68,13 @@ public class BookClassController {
 
     /**
      * 更新
-     * @param bookClassDTO 更新实体
+     * @param bookDTO 更新实体
      * @return
      */
     @RequestMapping("/update")
-    public ResultDTO updata(BookClassDTO bookClassDTO){
+    public ResultDTO updata(@RequestBody BookDTO bookDTO){
         try {
-            return bookClassService.updateByPrimaryKey(bookClassDTO);
+            return bookService.updateByPrimaryKeySelective(bookDTO);
         }catch (Exception e){
             logger.error("系统异常："+e);
             return new ResultDTO(HttpCode.EXCEPTION.getCode(),"系统异常");
@@ -88,7 +89,7 @@ public class BookClassController {
     @RequestMapping("/delete")
     public ResultDTO delete(int id){
         try {
-            return bookClassService.deleteByPrimaryKey(id);
+            return bookService.deleteByPrimaryKey(id);
         }catch (Exception e){
             logger.error("系统异常："+e);
             return new ResultDTO(HttpCode.EXCEPTION.getCode(),"系统异常");

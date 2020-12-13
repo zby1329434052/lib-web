@@ -1,4 +1,4 @@
-package com.zhang.libweb.service;
+package com.zhang.libweb.service.book;
 
 import com.zhang.libweb.constants.ResultDTO;
 import com.zhang.libweb.model.book.BookClassDTO;

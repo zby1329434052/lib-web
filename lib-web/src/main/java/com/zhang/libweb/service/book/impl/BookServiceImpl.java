@@ -1,10 +1,10 @@
-package com.zhang.libweb.service.impl;
+package com.zhang.libweb.service.book.impl;
 
 import com.zhang.libweb.constants.ResultDTO;
 import com.zhang.libweb.enums.HttpCode;
-import com.zhang.libweb.mapper.book.BookClassMapper;
-import com.zhang.libweb.model.book.BookClassDTO;
-import com.zhang.libweb.service.BookClassService;
+import com.zhang.libweb.mapper.book.BookMapper;
+import com.zhang.libweb.model.book.BookDTO;
+import com.zhang.libweb.service.book.BookService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +15,13 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 @Service
-public class BookClassServiceImpl implements BookClassService {
+public class BookServiceImpl implements BookService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private BookClassMapper bookClassMapper;
+    private BookMapper bookMapper;
+
 
     @Override
     public ResultDTO findListByName(String name) {
@@ -30,10 +31,10 @@ public class BookClassServiceImpl implements BookClassService {
             return new ResultDTO(HttpCode.FAIL.getCode(),"搜索关键字不能为空");
         }
         //业务查找
-        List<BookClassDTO> list = bookClassMapper.findListByName(name);
+        List<BookDTO> list = bookMapper.findListByName(name);
         logger.info("出参："+list);
         if(CollectionUtils.isEmpty(list)){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"暂无对应分类信息");
+            return new ResultDTO(HttpCode.FAIL.getCode(),"暂无对应书籍信息");
         }
         return new ResultDTO(HttpCode.SUCCESS.getCode(),"查找成功",list);
     }
@@ -44,7 +45,7 @@ public class BookClassServiceImpl implements BookClassService {
         if(0 == id){
             return new ResultDTO(HttpCode.FAIL.getCode(),"数据ID不能为空");
         }
-        int influenceNumber = bookClassMapper.deleteByPrimaryKey(id);
+        int influenceNumber = bookMapper.deleteByPrimaryKey(id);
         if(influenceNumber<=0){
             return new ResultDTO(HttpCode.FAIL.getCode(),"删除失败");
         }
@@ -54,12 +55,15 @@ public class BookClassServiceImpl implements BookClassService {
     }
 
     @Override
-    public ResultDTO insert(BookClassDTO record) {
+    public ResultDTO insert(BookDTO record) {
         logger.info("入参："+record);
-        if(StringUtils.isEmpty(record.getName())){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"分类名称不能为空");
+        if(StringUtils.isEmpty(record.getBookName())){
+            return new ResultDTO(HttpCode.FAIL.getCode(),"书籍名称不能为空");
         }
-        int influenceNumber = bookClassMapper.insert(record);
+        if(StringUtils.isEmpty(String.valueOf(record.getBookClassId()))){
+            return new ResultDTO(HttpCode.FAIL.getCode(),"书籍分类编号不能为空");
+        }
+        int influenceNumber = bookMapper.insert(record);
         if(influenceNumber<=0){
             return new ResultDTO(HttpCode.FAIL.getCode(),"新增失败");
         }
@@ -67,12 +71,18 @@ public class BookClassServiceImpl implements BookClassService {
     }
 
     @Override
-    public ResultDTO insertSelective(BookClassDTO record) {
+    public ResultDTO insertSelective(BookDTO record) {
         logger.info("入参："+record);
-        if(StringUtils.isEmpty(record.getName())){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"分类名称不能为空");
+        if(StringUtils.isEmpty(record.getBookName())){
+            return new ResultDTO(HttpCode.FAIL.getCode(),"书籍名称不能为空");
         }
-        int influenceNumber = bookClassMapper.insert(record);
+        if(StringUtils.isEmpty(String.valueOf(record.getBookClassId()))){
+            return new ResultDTO(HttpCode.FAIL.getCode(),"书籍分类编号不能为空");
+        }
+        if(0 >= record.getBookCount()){
+            return new ResultDTO(HttpCode.FAIL.getCode(),"书籍数量不能小于零");
+        }
+        int influenceNumber = bookMapper.insertSelective(record);
         if(influenceNumber<=0){
             return new ResultDTO(HttpCode.FAIL.getCode(),"新增失败");
         }
@@ -87,21 +97,21 @@ public class BookClassServiceImpl implements BookClassService {
             return new ResultDTO(HttpCode.FAIL.getCode(),"数据ID不能为空");
         }
         //业务查找
-        BookClassDTO bookClassDTO = bookClassMapper.selectByPrimaryKey(id);
-        logger.info("出参："+bookClassDTO);
-        if (null == bookClassDTO){
-            return new ResultDTO(HttpCode.FAIL.getCode(),"暂无分类数据");
+        BookDTO BookDTO = bookMapper.selectByPrimaryKey(id);
+        logger.info("出参："+BookDTO);
+        if (null == BookDTO){
+            return new ResultDTO(HttpCode.FAIL.getCode(),"暂无书籍数据");
         }
-        return new ResultDTO(HttpCode.SUCCESS.getCode(),"查找成功",bookClassDTO);
+        return new ResultDTO(HttpCode.SUCCESS.getCode(),"查找成功",BookDTO);
     }
 
     @Override
-    public ResultDTO updateByPrimaryKeySelective(BookClassDTO record) {
+    public ResultDTO updateByPrimaryKeySelective(BookDTO record) {
         logger.info("入参："+record);
         if(StringUtils.isEmpty(String.valueOf(record.getId()))){
             return new ResultDTO(HttpCode.FAIL.getCode(),"数据ID不能为空");
         }
-        int influenceNumber = bookClassMapper.updateByPrimaryKey(record);
+        int influenceNumber = bookMapper.updateByPrimaryKeySelective(record);
         if(influenceNumber<=0){
             return new ResultDTO(HttpCode.FAIL.getCode(),"更新失败");
         }
@@ -109,12 +119,12 @@ public class BookClassServiceImpl implements BookClassService {
     }
 
     @Override
-    public ResultDTO updateByPrimaryKey(BookClassDTO record) {
+    public ResultDTO updateByPrimaryKey(BookDTO record) {
         logger.info("入参："+record);
         if(StringUtils.isEmpty(String.valueOf(record.getId()))){
             return new ResultDTO(HttpCode.FAIL.getCode(),"数据ID不能为空");
         }
-        int influenceNumber = bookClassMapper.updateByPrimaryKey(record);
+        int influenceNumber = bookMapper.updateByPrimaryKey(record);
         if(influenceNumber<=0){
             return new ResultDTO(HttpCode.FAIL.getCode(),"更新失败");
         }
